@@ -1,28 +1,32 @@
 import 'package:employee_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CancelButton extends StatelessWidget {
   const CancelButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         Navigator.pop(context);
       },
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: kCancelBtnColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
+      child: Container(
+        width: 73.w,
+        height: 40.h,
+        decoration: BoxDecoration(
+          color: kCancelBtnColor,
+          borderRadius: BorderRadius.circular(6.r),
         ),
-      ),
-      child: Text(
-        "Cancel",
-        style: TextStyle(
-          color: kBtnPrimaryColor,
-          fontWeight: FontWeight.w500,
-          fontSize: 14,
+        child: Center(
+          child: Text(
+            'Cancel',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: kBlueColor,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ),
     );

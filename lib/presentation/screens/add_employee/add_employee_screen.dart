@@ -1,12 +1,21 @@
 import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:employee_app/presentation/components/container_widget.dart';
+import 'package:employee_app/presentation/components/custom_date_picker.dart';
 import 'package:employee_app/presentation/components/role_list_item.dart';
 import 'package:employee_app/presentation/components/save_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddEmployeeScreen extends StatelessWidget {
+class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});
+
+  @override
+  State<AddEmployeeScreen> createState() => _AddEmployeeScreenState();
+}
+
+class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+  String? selectedRole;
 
   @override
   Widget build(BuildContext context) {
@@ -76,25 +85,41 @@ class AddEmployeeScreen extends StatelessWidget {
                         context: context,
                         builder: (_) {
                           return Material(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(16.r),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 RoleListItem(
                                   title: 'Product Designer',
-                                  callback: () {},
+                                  callback: () {
+                                    selectedRole = 'Product Designer';
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
                                 ),
                                 RoleListItem(
                                   title: 'Flutter Developer',
-                                  callback: () {},
+                                  callback: () {
+                                    selectedRole = 'Flutter Developer';
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
                                 ),
                                 RoleListItem(
                                   title: 'QA Tester',
-                                  callback: () {},
+                                  callback: () {
+                                    selectedRole = 'QA Tester';
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
                                 ),
                                 RoleListItem(
                                   title: 'Product Owner',
-                                  callback: () {},
+                                  callback: () {
+                                    selectedRole = 'Product Owner';
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
                                   showDivider: false,
                                 ),
                               ],
@@ -112,9 +137,11 @@ class AddEmployeeScreen extends StatelessWidget {
                       SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Select role',
+                          selectedRole ?? 'Select role',
                           style: TextStyle(
-                            color: kHintTextColor,
+                            color: selectedRole == null
+                                ? kHintTextColor
+                                : kBlackColor,
                             fontSize: 16,
                           ),
                         ),
@@ -142,7 +169,12 @@ class AddEmployeeScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 12),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              showCustomDatePicker(context, DateTime.now(),
+                                  (selectedDate) {
+                                // print("Selected Date: $selectedDate");
+                              });
+                            },
                             child: Text('Today'),
                           ),
                         ],

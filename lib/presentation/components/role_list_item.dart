@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RoleListItem extends StatelessWidget {
   const RoleListItem({
@@ -18,12 +19,12 @@ class RoleListItem extends StatelessWidget {
       },
       child: Column(
         children: [
-          SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Text(
             title,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16.sp),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 16.h),
           if (showDivider) Divider(),
         ],
       ),
