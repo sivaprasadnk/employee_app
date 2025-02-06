@@ -1,4 +1,5 @@
 import 'package:employee_app/core/constants/colors.dart';
+import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:employee_app/presentation/components/container_widget.dart';
 import 'package:employee_app/presentation/components/custom_date_picker.dart';
@@ -16,6 +17,8 @@ class AddEmployeeScreen extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   String? selectedRole;
+  DateTime selectedStartDate = DateTime.now();
+  DateTime selectedEndDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -169,13 +172,24 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                           ),
                           SizedBox(width: 12),
                           GestureDetector(
-                            onTap: () {
-                              showCustomDatePicker(context, DateTime.now(),
-                                  (selectedDate) {
-                                // print("Selected Date: $selectedDate");
+                            onTap: () async {
+                              await showDialog<DateTime>(
+                                context: context,
+                                builder: (context) => CustomDatePickerDialog(
+                                  initialDate: DateTime.now(),
+                                  onDateSelected: (selectedDate) {},
+                                ),
+                              ).then((selectedDate) {
+                                selectedStartDate = selectedDate!;
+                                setState(() {});
+
                               });
                             },
-                            child: Text('Today'),
+                            child: selectedStartDate.isToday
+                                ? Text('Today')
+                                : Text(
+                                    selectedStartDate.displayDate(),
+                                  ),
                           ),
                         ],
                       ),

@@ -1,0 +1,1 @@
+extension IntExtensions on int {}

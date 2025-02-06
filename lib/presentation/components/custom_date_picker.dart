@@ -1,4 +1,5 @@
 import 'package:employee_app/core/constants/colors.dart';
+import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +22,7 @@ class CustomDatePickerDialog extends StatefulWidget {
 class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
   late DateTime selectedDate;
   late DateTime currentMonth;
+  final DateTime today = DateTime.now();
 
   @override
   void initState() {
@@ -60,7 +62,7 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      _selectDate(today);
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -83,7 +85,7 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      _selectDate(today.nextMonday());
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -110,7 +112,7 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      _selectDate(today.nextTuesday());
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -133,7 +135,7 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      _selectDate(today.add(Duration(days: 7)));
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -195,14 +197,16 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                 ),
                 SizedBox(width: 12),
                 Text(
-                  "5 Sep 2023",
+                  selectedDate.displayDate(),
                   style: TextStyle(fontSize: 16.sp),
                 ),
                 Spacer(),
                 CancelButton(),
                 SizedBox(width: 16),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context, selectedDate);
+                  },
                   child: Container(
                     width: 73.w,
                     height: 40.h,
@@ -246,30 +250,49 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
 
     for (int day = 1; day <= daysInMonth; day++) {
       DateTime date = DateTime(currentMonth.year, currentMonth.month, day);
-      bool isSelected = selectedDate == date;
+      bool isToday = today.year == date.year &&
+          today.month == date.month &&
+          today.day == date.day;
 
       dayWidgets.add(
         GestureDetector(
           onTap: () => _selectDate(date),
           child: Container(
-            width: 40.w,
-            height: 40.h,
+            // duration: Duration(milliseconds: 100),
+            width: 30.w,
+            height: 30.h,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: isSelected ? kBlueColor : Colors.transparent,
+              color: DateTime(
+                        selectedDate.year,
+                        selectedDate.month,
+                        selectedDate.day,
+                      ) ==
+                      date
+                  ? kBlueColor
+                  : Colors.transparent,
               shape: BoxShape.circle,
+              border: isToday ? Border.all(color: kBlueColor, width: 2) : null,
             ),
             child: Text(
               "$day",
               style: TextStyle(
                 fontSize: 15.sp,
-                color: isSelected ? kWhiteColor : kBlackColor,
+                color: DateTime(
+                          selectedDate.year,
+                          selectedDate.month,
+                          selectedDate.day,
+                        ) ==
+                        date
+                    ? kWhiteColor
+                    : kBlackColor,
               ),
             ),
           ),
         ),
       );
     }
+    debugPrint("selected ::$selectedDate");
 
     return GridView.count(
       crossAxisCount: 7,
@@ -278,16 +301,4 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
       children: dayWidgets,
     );
   }
-}
-
-// Function to show the Date Picker Dialog
-void showCustomDatePicker(BuildContext context, DateTime initialDate,
-    Function(DateTime) onDateSelected) {
-  showDialog(
-    context: context,
-    builder: (context) => CustomDatePickerDialog(
-      initialDate: initialDate,
-      onDateSelected: onDateSelected,
-    ),
-  );
 }
