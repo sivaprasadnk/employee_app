@@ -3,11 +3,11 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class EmployeeModel {
   @Id()
-  final int id;
-  final String name;
-  final String role;
-  final DateTime startDate;
-  final DateTime? endDate;
+  int id;
+  String name;
+  String role;
+  DateTime startDate;
+  DateTime? endDate;
   EmployeeModel({
     this.id = 0,
     required this.endDate,

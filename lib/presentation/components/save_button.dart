@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SaveButton extends StatelessWidget {
-  const SaveButton({super.key});
-
+  const SaveButton({
+    super.key,
+    required this.callback,
+  });
+  final VoidCallback callback;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        callback.call();
+      },
       child: Container(
         width: 73.w,
         height: 40.h,

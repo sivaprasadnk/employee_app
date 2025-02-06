@@ -3,7 +3,7 @@ import 'package:employee_app/data/models/employee_model.dart';
 import 'package:employee_app/domain/repository.dart';
 
 class RepositoryImpl extends Repository {
-  final LocalDatasource localDatasource;
+  final LocalDatasourceImpl localDatasource;
   RepositoryImpl(this.localDatasource);
   @override
   Future addEmployee(EmployeeModel employee) async {
