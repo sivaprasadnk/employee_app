@@ -1,4 +1,5 @@
 import 'package:employee_app/core/constants/colors.dart';
+import 'package:employee_app/core/constants/roles.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/data/models/employee_model.dart';
@@ -12,6 +13,7 @@ import 'package:employee_app/presentation/components/role_list_item.dart';
 import 'package:employee_app/presentation/components/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class EditEmployeeScreen extends StatefulWidget {
   const EditEmployeeScreen({
@@ -120,25 +122,24 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                 ContainerWidget(
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/person.png',
+                      SvgPicture.asset(
+                        'assets/images/person.svg',
                         height: 24,
                         width: 24,
                       ),
                       SizedBox(width: 12),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: TextFormField(
-                            focusNode: _focusNode,
-                            controller: textEditingController,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              border: InputBorder.none,
-                              hintText: 'Employee Name',
-                              hintStyle: TextStyle(
-                                color: kGreyColor,
-                              ),
+                        child: TextFormField(
+                          focusNode: _focusNode,
+                          controller: textEditingController,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            isDense: true,
+                            filled: false,
+                            border: InputBorder.none,
+                            hintText: 'Employee Name',
+                            hintStyle: TextStyle(
+                              color: kGreyColor,
                             ),
                           ),
                         ),
@@ -158,49 +159,26 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                               borderRadius: BorderRadius.circular(16.r),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  RoleListItem(
-                                    title: 'Product Designer',
+                                children: employeeRoles.map((item) {
+                                  return RoleListItem(
+                                    title: item,
+                                    showDivider: employeeRoles.indexOf(item) !=
+                                        employeeRoles.length - 1,
                                     callback: () {
-                                      selectedRole = 'Product Designer';
+                                      selectedRole = item;
                                       setState(() {});
                                       Navigator.pop(context);
                                     },
-                                  ),
-                                  RoleListItem(
-                                    title: 'Flutter Developer',
-                                    callback: () {
-                                      selectedRole = 'Flutter Developer';
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RoleListItem(
-                                    title: 'QA Tester',
-                                    callback: () {
-                                      selectedRole = 'QA Tester';
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RoleListItem(
-                                    title: 'Product Owner',
-                                    callback: () {
-                                      selectedRole = 'Product Owner';
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                    showDivider: false,
-                                  ),
-                                ],
+                                  );
+                                }).toList(),
                               ),
                             );
                           });
                     },
                     child: Row(
                       children: [
-                        Image.asset(
-                          'assets/images/work.png',
+                        SvgPicture.asset(
+                          'assets/images/work.svg',
                           height: 24,
                           width: 24,
                         ),
@@ -216,8 +194,8 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                             ),
                           ),
                         ),
-                        Image.asset(
-                          'assets/images/arrow_down.png',
+                        SvgPicture.asset(
+                          'assets/images/arrow_down.svg',
                           height: 20,
                         )
                       ],
@@ -232,8 +210,8 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                         width: double.infinity,
                         child: Row(
                           children: [
-                            Image.asset(
-                              'assets/images/event.png',
+                            SvgPicture.asset(
+                              'assets/images/event.svg',
                               height: 24,
                               width: 24,
                             ),
@@ -261,19 +239,19 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 16),
-                    Image.asset(
-                      'assets/images/arrow.png',
+                    SizedBox(width: 16.w),
+                    SvgPicture.asset(
+                      'assets/images/arrow_right.svg',
                       height: 20,
                     ),
-                    SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     Expanded(
                       child: ContainerWidget(
                         width: double.infinity,
                         child: Row(
                           children: [
-                            Image.asset(
-                              'assets/images/event.png',
+                            SvgPicture.asset(
+                              'assets/images/event.svg',
                               height: 24,
                               width: 24,
                             ),

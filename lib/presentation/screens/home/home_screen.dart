@@ -5,6 +5,7 @@ import 'package:employee_app/presentation/screens/add_employee/add_employee_scre
 import 'package:employee_app/presentation/screens/home/employees_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,10 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
             } else {
               if (snapshot.data == null || snapshot.data!.isEmpty) {
                 return Center(
-                  child: Image.asset(
-                    'assets/images/no_employee.png',
+                  child: SvgPicture.asset(
+                    'assets/images/no_employee.svg',
                     height: 244.h,
-                    width: 261.w,
                   ),
                 );
               }

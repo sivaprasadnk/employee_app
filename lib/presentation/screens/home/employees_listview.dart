@@ -103,6 +103,7 @@ class EmployeesListview extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: 16.h),
                             Text(
                               item.name,
                               style: TextStyle(
@@ -114,9 +115,8 @@ class EmployeesListview extends StatelessWidget {
                             Text(
                               item.role,
                               style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.sp,
-                                color: Color.fromRGBO(148, 156, 158, 1),
+                                fontSize: 14.sp,
+                                color: kGreyColor,
                               ),
                             ),
                             SizedBox(height: 6.h),
@@ -124,21 +124,19 @@ class EmployeesListview extends StatelessWidget {
                               Text(
                                 "From ${item.startDate.displayDate()}",
                                 style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
-                                  color: Color.fromRGBO(148, 156, 158, 1),
+                                  fontSize: 12.sp,
+                                  color: kGreyColor,
                                 ),
                               )
                             else
                               Text(
                                 "${item.startDate.displayDate()} - ${item.endDate!.displayDate()}",
                                 style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
+                                  fontSize: 12.sp,
                                   color: Color.fromRGBO(148, 156, 158, 1),
                                 ),
                               ),
-                            SizedBox(height: 6.h),
+                            SizedBox(height: 16.h),
                           ],
                         ),
                       ),

@@ -13,6 +13,7 @@ import 'package:employee_app/presentation/components/role_list_item.dart';
 import 'package:employee_app/presentation/components/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});
@@ -64,14 +65,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     var validationMsg = CommonFunctions.validate(model);
                     if (validationMsg.isEmpty) {
                       await locator<AddOrUpdateEmployee>()
-                          .call(
-                        EmployeeModel(
-                          endDate: selectedEndDate,
-                          name: textEditingController.text,
-                          role: selectedRole!,
-                          startDate: selectedStartDate,
-                        ),
-                      )
+                          .call(model)
                           .then((_) {
                         if (context.mounted) {
                           Navigator.pop(context);
@@ -105,25 +99,24 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 ContainerWidget(
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/person.png',
+                      SvgPicture.asset(
+                        'assets/images/person.svg',
                         height: 24,
                         width: 24,
                       ),
                       SizedBox(width: 12),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: TextFormField(
-                            focusNode: _focusNode,
-                            controller: textEditingController,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              border: InputBorder.none,
-                              hintText: 'Employee Name',
-                              hintStyle: TextStyle(
-                                color: kGreyColor,
-                              ),
+                        child: TextFormField(
+                          focusNode: _focusNode,
+                          controller: textEditingController,
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            isDense: true,
+                            filled: false,
+                            border: InputBorder.none,
+                            hintText: 'Employee Name',
+                            hintStyle: TextStyle(
+                              color: kGreyColor,
                             ),
                           ),
                         ),
@@ -140,6 +133,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                           context: context,
                           builder: (_) {
                             return Material(
+                              color: kWhiteColor,
                               borderRadius: BorderRadius.circular(16.r),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -155,48 +149,15 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                                     },
                                   );
                                 }).toList(),
-                                // children: [
-                                //   RoleListItem(
-                                //     title: 'Product Designer',
-                                //     callback: () {
-                                //       selectedRole = 'Product Designer';
-                                //       setState(() {});
-                                //       Navigator.pop(context);
-                                //     },
-                                //   ),
-                                //   RoleListItem(
-                                //     title: 'Flutter Developer',
-                                //     callback: () {
-                                //       selectedRole = 'Flutter Developer';
-                                //       setState(() {});
-                                //       Navigator.pop(context);
-                                //     },
-                                //   ),
-                                //   RoleListItem(
-                                //     title: 'QA Tester',
-                                //     callback: () {
-                                //       selectedRole = 'QA Tester';
-                                //       setState(() {});
-                                //       Navigator.pop(context);
-                                //     },
-                                //   ),
-                                //   RoleListItem(
-                                //     title: 'Product Owner',
-                                //     callback: () {
-                                //       selectedRole = 'Product Owner';
-                                //       setState(() {});
-                                //       Navigator.pop(context);
-                                //     },
-                                //     showDivider: false,
-                                //   ),
+                                
                               ),
                             );
                           });
                     },
                     child: Row(
                       children: [
-                        Image.asset(
-                          'assets/images/work.png',
+                        SvgPicture.asset(
+                          'assets/images/work.svg',
                           height: 24,
                           width: 24,
                         ),
@@ -212,10 +173,13 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                             ),
                           ),
                         ),
-                        Image.asset(
-                          'assets/images/arrow_down.png',
-                          height: 20,
-                        )
+                        SvgPicture.asset(
+                          'assets/images/arrow_down.svg',
+                          colorFilter: const ColorFilter.mode(
+                            kBlueColor,
+                            BlendMode.srcIn,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -228,8 +192,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         width: double.infinity,
                         child: Row(
                           children: [
-                            Image.asset(
-                              'assets/images/event.png',
+                            SvgPicture.asset(
+                              'assets/images/event.svg',
                               height: 24,
                               width: 24,
                             ),
@@ -257,19 +221,19 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 16),
-                    Image.asset(
-                      'assets/images/arrow.png',
+                    SizedBox(width: 16.w),
+                    SvgPicture.asset(
+                      'assets/images/arrow_right.svg',
                       height: 20,
                     ),
-                    SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     Expanded(
                       child: ContainerWidget(
                         width: double.infinity,
                         child: Row(
                           children: [
-                            Image.asset(
-                              'assets/images/event.png',
+                            SvgPicture.asset(
+                              'assets/images/event.svg',
                               height: 24,
                               width: 24,
                             ),

@@ -18,19 +18,23 @@ class RoleListItem extends StatelessWidget {
       onTap: () {
         callback.call();
       },
-      child: Column(
-        children: [
-          SizedBox(height: 16.h),
-          Text(
-            title,
-            style: TextStyle(fontSize: 16.sp),
-          ),
-          SizedBox(height: 16.h),
-          if (showDivider)
-            Divider(
-              color: kBgColor,
+      child: Container(
+        width: double.infinity,
+        color: kWhiteColor,
+        child: Column(
+          children: [
+            SizedBox(height: 16.h),
+            Text(
+              title,
+              style: TextStyle(fontSize: 16.sp),
             ),
-        ],
+            SizedBox(height: 16.h),
+            if (showDivider)
+              Divider(
+                color: kBgColor,
+              ),
+          ],
+        ),
       ),
     );
   }
