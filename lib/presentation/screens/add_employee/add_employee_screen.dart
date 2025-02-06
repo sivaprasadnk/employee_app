@@ -2,7 +2,8 @@ import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:employee_app/presentation/components/container_widget.dart';
-import 'package:employee_app/presentation/components/custom_date_picker.dart';
+import 'package:employee_app/presentation/components/custom_end_date_picker.dart';
+import 'package:employee_app/presentation/components/custom_start_date_picker.dart';
 import 'package:employee_app/presentation/components/role_list_item.dart';
 import 'package:employee_app/presentation/components/save_button.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class AddEmployeeScreen extends StatefulWidget {
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   String? selectedRole;
   DateTime selectedStartDate = DateTime.now();
-  DateTime selectedEndDate = DateTime.now();
+  DateTime? selectedEndDate;
 
   @override
   Widget build(BuildContext context) {
@@ -175,9 +176,9 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                             onTap: () async {
                               await showDialog<DateTime>(
                                 context: context,
-                                builder: (context) => CustomDatePickerDialog(
-                                  initialDate: DateTime.now(),
-                                  onDateSelected: (selectedDate) {},
+                                builder: (context) =>
+                                    CustomStartDatePickerDialog(
+                                  initialDate: selectedStartDate,
                                 ),
                               ).then((selectedDate) {
                                 selectedStartDate = selectedDate!;
@@ -213,8 +214,21 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                           ),
                           SizedBox(width: 12),
                           GestureDetector(
-                            onTap: () {},
-                            child: Text('No date'),
+                            onTap: () async {
+                              await showDialog<DateTime>(
+                                context: context,
+                                builder: (context) => CustomEndDatePickerDialog(
+                                  startDate: selectedStartDate,
+                                  endDate: selectedEndDate,
+                                ),
+                              ).then((selectedDate) {
+                                selectedEndDate = selectedDate;
+                                setState(() {});
+                              });
+                            },
+                            child: selectedEndDate == null
+                                ? Text('No date')
+                                : Text(selectedEndDate!.displayDate()),
                           ),
                         ],
                       ),

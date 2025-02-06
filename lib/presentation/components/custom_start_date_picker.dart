@@ -1,25 +1,26 @@
 import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
+import 'package:employee_app/presentation/components/calendar_button.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-class CustomDatePickerDialog extends StatefulWidget {
+class CustomStartDatePickerDialog extends StatefulWidget {
   final DateTime initialDate;
-  final Function(DateTime) onDateSelected;
 
-  const CustomDatePickerDialog({
+  const CustomStartDatePickerDialog({
     super.key,
     required this.initialDate,
-    required this.onDateSelected,
   });
 
   @override
-  State<CustomDatePickerDialog> createState() => _CustomDatePickerDialogState();
+  State<CustomStartDatePickerDialog> createState() =>
+      _CustomStartDatePickerDialogState();
 }
 
-class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
+class _CustomStartDatePickerDialogState
+    extends State<CustomStartDatePickerDialog> {
   late DateTime selectedDate;
   late DateTime currentMonth;
   final DateTime today = DateTime.now();
@@ -33,9 +34,14 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
   }
 
   void _selectDate(DateTime date) {
-    setState(() {
-      selectedDate = date;
-    });
+    if (date.isToday ||
+        date == today.nextMonday() ||
+        date == today.nextTuesday() ||
+        date == today.add(Duration(days: 7))) {
+      currentMonth = DateTime(today.year, today.month);
+    }
+    selectedDate = date;
+    setState(() {});
   }
 
   void _changeMonth(int increment) {
@@ -60,48 +66,22 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: CalendarButton(
+                    callback: () {
                       _selectDate(today);
                     },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: kCancelBtnColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                    child: Text(
-                      "Today",
-                      style: TextStyle(
-                        color: kBtnPrimaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                    ),
+                    title: 'Today',
+                    isSelected: selectedDate == today,
                   ),
                 ),
                 SizedBox(width: 16.w),
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: CalendarButton(
+                    callback: () {
                       _selectDate(today.nextMonday());
                     },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: kCancelBtnColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                    child: Text(
-                      "Next Monday",
-                      style: TextStyle(
-                        color: kBtnPrimaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                    ),
+                    title: 'Next Monday',
+                    isSelected: selectedDate == today.nextMonday(),
                   ),
                 )
               ],
@@ -110,50 +90,24 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: CalendarButton(
+                    callback: () {
                       _selectDate(today.nextTuesday());
                     },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: kCancelBtnColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                    child: Text(
-                      "Next Tuesday",
-                      style: TextStyle(
-                        color: kBtnPrimaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                    ),
+                    title: 'Next Tuesday',
+                    isSelected: selectedDate == today.nextTuesday(),
                   ),
                 ),
                 SizedBox(width: 16.w),
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
+                  child: CalendarButton(
+                    callback: () {
                       _selectDate(today.add(Duration(days: 7)));
                     },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: kCancelBtnColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                    child: Text(
-                      "After 1 week",
-                      style: TextStyle(
-                        color: kBtnPrimaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                      ),
-                    ),
+                    title: 'After 1 week',
+                    isSelected: selectedDate == today.add(Duration(days: 7)),
                   ),
-                )
+                ),
               ],
             ),
             SizedBox(height: 24.h),
@@ -270,7 +224,7 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                       ) ==
                       date
                   ? kBlueColor
-                  : Colors.transparent,
+                  : kTransparentColor,
               shape: BoxShape.circle,
               border: isToday ? Border.all(color: kBlueColor, width: 2) : null,
             ),
@@ -292,8 +246,6 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
         ),
       );
     }
-    debugPrint("selected ::$selectedDate");
-
     return GridView.count(
       crossAxisCount: 7,
       shrinkWrap: true,
