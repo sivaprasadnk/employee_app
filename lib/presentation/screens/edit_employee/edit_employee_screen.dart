@@ -3,6 +3,7 @@ import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/data/models/employee_model.dart';
 import 'package:employee_app/domain/use_cases/add_update_employee.dart';
+import 'package:employee_app/domain/use_cases/delete_employee.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:employee_app/presentation/components/container_widget.dart';
 import 'package:employee_app/presentation/components/custom_end_date_picker.dart';
@@ -92,8 +93,23 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(
-            'Add Employee Details',
+            'Edit Employee Details',
           ),
+          actions: [
+            GestureDetector(
+              onTap: () async {
+                await locator<DeleteEmployee>()
+                    .call(widget.employeeModel)
+                    .then((_) {
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+                });
+              },
+              child: Icon(Icons.delete),
+            ),
+            SizedBox(width: 16),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),

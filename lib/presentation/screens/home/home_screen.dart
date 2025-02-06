@@ -107,38 +107,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                       builder: (_) => EditEmployeeScreen(
                                           employeeModel: item)));
                             },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 6.h),
-                                Text(
-                                  item.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.sp,
+                            child: ColoredBox(
+                              color: kWhiteColor,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 6.h),
+                                  Text(
+                                    item.name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.sp,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 6.h),
-                                Text(
-                                  item.role,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.sp,
-                                    color: Color.fromRGBO(148, 156, 158, 1),
+                                  SizedBox(height: 6.h),
+                                  Text(
+                                    item.role,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.sp,
+                                      color: Color.fromRGBO(148, 156, 158, 1),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 6.h),
-                                Text(
-                                  "From ${item.startDate.displayDate()}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.sp,
-                                    color: Color.fromRGBO(148, 156, 158, 1),
+                                  SizedBox(height: 6.h),
+                                  Text(
+                                    "From ${item.startDate.displayDate()}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.sp,
+                                      color: Color.fromRGBO(148, 156, 158, 1),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 6.h),
-                              ],
+                                  SizedBox(height: 6.h),
+                                ],
+                              ),
                             ),
                           ),
                         );
