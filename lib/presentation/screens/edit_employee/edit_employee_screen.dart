@@ -12,14 +12,28 @@ import 'package:employee_app/presentation/components/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddEmployeeScreen extends StatefulWidget {
-  const AddEmployeeScreen({super.key});
+class EditEmployeeScreen extends StatefulWidget {
+  const EditEmployeeScreen({
+    super.key,
+    required this.employeeModel,
+  });
+  final EmployeeModel employeeModel;
 
   @override
-  State<AddEmployeeScreen> createState() => _AddEmployeeScreenState();
+  State<EditEmployeeScreen> createState() => _EditEmployeeScreenState();
 }
 
-class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
+  @override
+  initState() {
+    selectedRole = widget.employeeModel.role;
+    textEditingController.text = widget.employeeModel.name;
+    selectedStartDate = widget.employeeModel.startDate;
+    selectedEndDate = widget.employeeModel.endDate;
+    setState(() {});
+    super.initState();
+  }
+
   String? selectedRole;
   DateTime selectedStartDate = DateTime.now();
   DateTime? selectedEndDate;
@@ -56,6 +70,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     await locator<AddOrUpdateEmployee>()
                         .call(
                       EmployeeModel(
+                        id: widget.employeeModel.id,
                         endDate: selectedEndDate,
                         name: textEditingController.text,
                         role: selectedRole!,

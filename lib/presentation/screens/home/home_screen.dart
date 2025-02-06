@@ -3,6 +3,7 @@ import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/data/models/employee_model.dart';
 import 'package:employee_app/main.dart';
 import 'package:employee_app/presentation/screens/add_employee/add_employee_screen.dart';
+import 'package:employee_app/presentation/screens/edit_employee/edit_employee_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -98,38 +99,47 @@ class _HomeScreenState extends State<HomeScreen> {
                         var item = snapshot.data![index];
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 6.h),
-                              Text(
-                                item.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => EditEmployeeScreen(
+                                          employeeModel: item)));
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 6.h),
+                                Text(
+                                  item.name,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.sp,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 6.h),
-                              Text(
-                                item.role,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
-                                  color: Color.fromRGBO(148, 156, 158, 1),
+                                SizedBox(height: 6.h),
+                                Text(
+                                  item.role,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.sp,
+                                    color: Color.fromRGBO(148, 156, 158, 1),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 6.h),
-                              Text(
-                                "From ${item.startDate.displayDate()}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.sp,
-                                  color: Color.fromRGBO(148, 156, 158, 1),
+                                SizedBox(height: 6.h),
+                                Text(
+                                  "From ${item.startDate.displayDate()}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.sp,
+                                    color: Color.fromRGBO(148, 156, 158, 1),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 6.h),
-                            ],
+                                SizedBox(height: 6.h),
+                              ],
+                            ),
                           ),
                         );
                       },
