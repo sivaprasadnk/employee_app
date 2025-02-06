@@ -1,3 +1,4 @@
+import 'package:employee_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,7 +26,10 @@ class RoleListItem extends StatelessWidget {
             style: TextStyle(fontSize: 16.sp),
           ),
           SizedBox(height: 16.h),
-          if (showDivider) Divider(),
+          if (showDivider)
+            Divider(
+              color: kBgColor,
+            ),
         ],
       ),
     );

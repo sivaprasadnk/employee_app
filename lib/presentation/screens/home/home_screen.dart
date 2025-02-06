@@ -1,9 +1,8 @@
 import 'package:employee_app/core/constants/colors.dart';
-import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/data/models/employee_model.dart';
 import 'package:employee_app/main.dart';
 import 'package:employee_app/presentation/screens/add_employee/add_employee_screen.dart';
-import 'package:employee_app/presentation/screens/edit_employee/edit_employee_screen.dart';
+import 'package:employee_app/presentation/screens/home/employees_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,12 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBgColor,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        floatingActionButton: GestureDetector(
+          onTap: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (_) => AddEmployeeScreen()));
         },
         child: Container(
+            height: 50.h,
+            width: 50.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: kBlueColor,
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Center(
             child: Image.asset(
               'assets/images/plus_icon.png',
-              height: 18,
+                height: 18.h,
             ),
           ),
         ),
@@ -64,98 +65,46 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Center(
                   child: Image.asset(
                     'assets/images/no_employee.png',
-                    height: 244,
+                    height: 244.h,
+                    width: 261.w,
                   ),
                 );
               }
+              var currentList = snapshot.data!
+                  .where((element) => element.endDate == null)
+                  .toList();
+              var previousList = snapshot.data!
+                  .where((element) => element.endDate != null)
+                  .toList();
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 16.h),
+                  if (currentList.isNotEmpty)
+                    EmployeesListview(
+                      list: currentList,
+                      title: 'Current Employees',
+                    ),
+                  if (previousList.isNotEmpty)
+                  SizedBox(height: 16.h),
+                  if (previousList.isNotEmpty)
+                    EmployeesListview(
+                      list: previousList,
+                      title: 'Previous Employees',
+                    ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    padding: EdgeInsets.only(left: 16.w, top: 12.h),
                     child: Text(
-                      'Current employees',
+                      'Swipe left to delete',
                       style: TextStyle(
-                        color: kBlueColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.sp,
+                        fontSize: 15.sp,
+                        color: kGreyColor,
                       ),
                     ),
-                  ),
-                  SizedBox(height: 16.h),
-                  ColoredBox(
-                    color: kWhiteColor,
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          color: kBorderColor,
-                        );
-                      },
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        var item = snapshot.data![index];
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => EditEmployeeScreen(
-                                          employeeModel: item)));
-                            },
-                            child: ColoredBox(
-                              color: kWhiteColor,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 6.h),
-                                  Text(
-                                    item.name,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp,
-                                    ),
-                                  ),
-                                  SizedBox(height: 6.h),
-                                  Text(
-                                    item.role,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp,
-                                      color: Color.fromRGBO(148, 156, 158, 1),
-                                    ),
-                                  ),
-                                  SizedBox(height: 6.h),
-                                  Text(
-                                    "From ${item.startDate.displayDate()}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.sp,
-                                      color: Color.fromRGBO(148, 156, 158, 1),
-                                    ),
-                                  ),
-                                  SizedBox(height: 6.h),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  )
                 ],
               );
-              // return Center(
-              //   child: Image.asset(
-              //     'assets/images/no_employee.png',
-              //     height: 244,
-              //   ),
-              // );
             }
           },
         )

@@ -137,7 +137,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                               border: InputBorder.none,
                               hintText: 'Employee Name',
                               hintStyle: TextStyle(
-                                color: kHintTextColor,
+                                color: kGreyColor,
                               ),
                             ),
                           ),
@@ -210,7 +210,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                             selectedRole ?? 'Select role',
                             style: TextStyle(
                               color: selectedRole == null
-                                  ? kHintTextColor
+                                  ? kGreyColor
                                   : kBlackColor,
                               fontSize: 16,
                             ),

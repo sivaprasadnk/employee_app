@@ -1,4 +1,6 @@
+import 'package:employee_app/core/common_functions.dart';
 import 'package:employee_app/core/constants/colors.dart';
+import 'package:employee_app/core/constants/roles.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/data/models/employee_model.dart';
@@ -53,20 +55,34 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 SizedBox(width: 16),
                 SaveButton(
                   callback: () async {
-                    await locator<AddOrUpdateEmployee>()
-                        .call(
-                      EmployeeModel(
-                        endDate: selectedEndDate,
-                        name: textEditingController.text,
-                        role: selectedRole!,
-                        startDate: selectedStartDate,
-                      ),
-                    )
-                        .then((_) {
+                    var model = EmployeeModel(
+                      endDate: selectedEndDate,
+                      name: textEditingController.text.trim(),
+                      role: selectedRole ?? "",
+                      startDate: selectedStartDate,
+                    );
+                    var validationMsg = CommonFunctions.validate(model);
+                    if (validationMsg.isEmpty) {
+                      await locator<AddOrUpdateEmployee>()
+                          .call(
+                        EmployeeModel(
+                          endDate: selectedEndDate,
+                          name: textEditingController.text,
+                          role: selectedRole!,
+                          startDate: selectedStartDate,
+                        ),
+                      )
+                          .then((_) {
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
+                      });
+                    } else {
                       if (context.mounted) {
-                        Navigator.pop(context);
+                        CommonFunctions.showSnackbar(
+                            context: context, message: validationMsg);
                       }
-                    });
+                    }
                   },
                 ),
                 SizedBox(width: 16),
@@ -106,7 +122,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                               border: InputBorder.none,
                               hintText: 'Employee Name',
                               hintStyle: TextStyle(
-                                color: kHintTextColor,
+                                color: kGreyColor,
                               ),
                             ),
                           ),
@@ -127,41 +143,52 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                               borderRadius: BorderRadius.circular(16.r),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  RoleListItem(
-                                    title: 'Product Designer',
+                                children: employeeRoles.map((item) {
+                                  return RoleListItem(
+                                    title: item,
+                                    showDivider: employeeRoles.indexOf(item) !=
+                                        employeeRoles.length - 1,
                                     callback: () {
-                                      selectedRole = 'Product Designer';
+                                      selectedRole = item;
                                       setState(() {});
                                       Navigator.pop(context);
                                     },
-                                  ),
-                                  RoleListItem(
-                                    title: 'Flutter Developer',
-                                    callback: () {
-                                      selectedRole = 'Flutter Developer';
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RoleListItem(
-                                    title: 'QA Tester',
-                                    callback: () {
-                                      selectedRole = 'QA Tester';
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  RoleListItem(
-                                    title: 'Product Owner',
-                                    callback: () {
-                                      selectedRole = 'Product Owner';
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                    showDivider: false,
-                                  ),
-                                ],
+                                  );
+                                }).toList(),
+                                // children: [
+                                //   RoleListItem(
+                                //     title: 'Product Designer',
+                                //     callback: () {
+                                //       selectedRole = 'Product Designer';
+                                //       setState(() {});
+                                //       Navigator.pop(context);
+                                //     },
+                                //   ),
+                                //   RoleListItem(
+                                //     title: 'Flutter Developer',
+                                //     callback: () {
+                                //       selectedRole = 'Flutter Developer';
+                                //       setState(() {});
+                                //       Navigator.pop(context);
+                                //     },
+                                //   ),
+                                //   RoleListItem(
+                                //     title: 'QA Tester',
+                                //     callback: () {
+                                //       selectedRole = 'QA Tester';
+                                //       setState(() {});
+                                //       Navigator.pop(context);
+                                //     },
+                                //   ),
+                                //   RoleListItem(
+                                //     title: 'Product Owner',
+                                //     callback: () {
+                                //       selectedRole = 'Product Owner';
+                                //       setState(() {});
+                                //       Navigator.pop(context);
+                                //     },
+                                //     showDivider: false,
+                                //   ),
                               ),
                             );
                           });
@@ -179,7 +206,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                             selectedRole ?? 'Select role',
                             style: TextStyle(
                               color: selectedRole == null
-                                  ? kHintTextColor
+                                  ? kGreyColor
                                   : kBlackColor,
                               fontSize: 16,
                             ),

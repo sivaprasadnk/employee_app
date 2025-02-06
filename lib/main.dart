@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             scaffoldBackgroundColor: kWhiteColor,
-            hintColor: kHintTextColor,
+            hintColor: kGreyColor,
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
