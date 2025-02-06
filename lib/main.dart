@@ -1,9 +1,11 @@
 import 'package:employee_app/core/constants/colors.dart';
+import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/presentation/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
+  setup();
   runApp(const MyApp());
 }
 
