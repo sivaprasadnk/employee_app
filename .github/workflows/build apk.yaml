@@ -3,7 +3,7 @@ name: Build Flutter APK
 on:
   push:
     branches:
-      - production  # Trigger this workflow on push to the main branch
+      - production
 
 jobs:
   upload:

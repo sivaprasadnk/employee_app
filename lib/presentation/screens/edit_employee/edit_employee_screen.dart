@@ -108,7 +108,10 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                   }
                 });
               },
-              child: Icon(Icons.delete),
+              child: SvgPicture.asset(
+                'assets/images/delete.svg',
+                height: 24.h,
+              ),
             ),
             SizedBox(width: 16),
           ],
