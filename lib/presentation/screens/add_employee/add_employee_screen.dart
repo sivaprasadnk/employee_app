@@ -99,10 +99,15 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 ContainerWidget(
                   child: Row(
                     children: [
-                      SvgPicture.asset(
-                        'assets/images/person.svg',
-                        height: 24,
-                        width: 24,
+                      GestureDetector(
+                        onTap: () {
+                          _focusNode.requestFocus();
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/person.svg',
+                          height: 24,
+                          width: 24,
+                        ),
                       ),
                       SizedBox(width: 12),
                       Expanded(

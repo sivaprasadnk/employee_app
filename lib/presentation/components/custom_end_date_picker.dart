@@ -4,6 +4,7 @@ import 'package:employee_app/presentation/components/calendar_button.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class CustomEndDatePickerDialog extends StatefulWidget {
@@ -124,8 +125,8 @@ class _CustomEndDatePickerDialogState extends State<CustomEndDatePickerDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'assets/images/event.png',
+                SvgPicture.asset(
+                  'assets/images/event.svg',
                   height: 24,
                   width: 24,
                 ),

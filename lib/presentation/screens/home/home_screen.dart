@@ -30,30 +30,30 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBgColor,
+        backgroundColor: kBgColor,
         floatingActionButton: GestureDetector(
           onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddEmployeeScreen()));
-        },
-        child: Container(
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => AddEmployeeScreen()));
+          },
+          child: Container(
             height: 50.h,
             width: 50.w,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: kBlueColor,
-          ),
-          child: Center(
-            child: Image.asset(
-              'assets/images/plus_icon.png',
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: kBlueColor,
+            ),
+            child: Center(
+              child: Image.asset(
+                'assets/images/plus_icon.png',
                 height: 18.h,
+              ),
             ),
           ),
         ),
-      ),
-      appBar: AppBar(
-        title: Text('Employee List'),
-      ),
+        appBar: AppBar(
+          title: Text('Employee List'),
+        ),
         body: StreamBuilder(
           stream: _stream,
           builder: (context, snapshot) {
@@ -76,38 +76,38 @@ class _HomeScreenState extends State<HomeScreen> {
               var previousList = snapshot.data!
                   .where((element) => element.endDate != null)
                   .toList();
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 16.h),
-                  if (currentList.isNotEmpty)
-                    EmployeesListview(
-                      list: currentList,
-                      title: 'Current Employees',
-                    ),
-                  if (previousList.isNotEmpty)
-                  SizedBox(height: 16.h),
-                  if (previousList.isNotEmpty)
-                    EmployeesListview(
-                      list: previousList,
-                      title: 'Previous Employees',
-                    ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 16.w, top: 12.h),
-                    child: Text(
-                      'Swipe left to delete',
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        color: kGreyColor,
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 16.h),
+                    if (currentList.isNotEmpty)
+                      EmployeesListview(
+                        list: currentList,
+                        title: 'Current Employees',
                       ),
-                    ),
-                  )
-                ],
+                    if (previousList.isNotEmpty) SizedBox(height: 16.h),
+                    if (previousList.isNotEmpty)
+                      EmployeesListview(
+                        list: previousList,
+                        title: 'Previous Employees',
+                      ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.w, top: 12.h),
+                      child: Text(
+                        'Swipe left to delete',
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: kGreyColor,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               );
             }
           },
-        )
-    );
+        ));
   }
 }

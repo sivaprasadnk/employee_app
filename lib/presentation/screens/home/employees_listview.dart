@@ -39,6 +39,7 @@ class EmployeesListview extends StatelessWidget {
           color: kWhiteColor,
           child: ListView.separated(
             padding: EdgeInsets.zero,
+            physics: NeverScrollableScrollPhysics(),
             separatorBuilder: (context, index) {
               return Container(
                 width: double.infinity,
