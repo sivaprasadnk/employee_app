@@ -1,4 +1,6 @@
 import 'package:employee_app/core/constants/colors.dart';
+import 'package:employee_app/core/locator.dart';
+import 'package:employee_app/data/data_source/local_datasource.dart';
 import 'package:employee_app/presentation/screens/add_employee/add_employee_screen.dart';
 import 'package:employee_app/presentation/screens/home/employees_listview.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text('Employee List'),
         ),
         body: StreamBuilder(
-          stream: Stream.empty(),
+          stream: locator<LocalDatasourceImpl>().getEmployees(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(

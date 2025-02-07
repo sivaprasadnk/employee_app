@@ -11,10 +11,22 @@ class EmployeeDatabase extends _$EmployeeDatabase {
 
   @override
   int get schemaVersion => 1;
+  // static LazyDatabase _openConnection() {
+  //   return LazyDatabase(
+  //     () async {
+  //       final dbFolder = await getApplicationDocumentsDirectory();
+  //       final file = File(p.join(dbFolder.path, 'db.sqlite'));
 
+  //       return NativeDatabase.createInBackground(file);
+  //     },
+  //   );
+  // }
   static QueryExecutor _openConnection() {
     return driftDatabase(
-      name: 'my_database',
+      name: 'my_database.db',
+      web: DriftWebOptions(
+          sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+          driftWorker: Uri.parse('drift_worker.js')),
       native: const DriftNativeOptions(
         // By default, `driftDatabase` from `package:drift_flutter` stores the
         // database files in `getApplicationDocumentsDirectory()`.
