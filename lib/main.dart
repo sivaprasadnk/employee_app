@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
             ),
             scaffoldBackgroundColor: kWhiteColor,
             hintColor: kGreyColor,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(seedColor: kBlueColor),
             useMaterial3: true,
           ),
           home: const HomeScreen()),
