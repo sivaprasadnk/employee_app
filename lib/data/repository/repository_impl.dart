@@ -6,8 +6,8 @@ class RepositoryImpl extends Repository {
   final LocalDatasourceImpl localDatasource;
   RepositoryImpl(this.localDatasource);
   @override
-  Future addOrUpdateEmployee(EmployeeModel employee) async {
-    return await localDatasource.addOrUpdateEmployee(employee);
+  Future addEmployee(EmployeeModel employee) async {
+    return await localDatasource.addEmployee(employee);
   }
 
   @override

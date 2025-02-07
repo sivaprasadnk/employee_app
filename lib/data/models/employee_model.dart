@@ -1,8 +1,8 @@
-import 'package:objectbox/objectbox.dart';
+// import 'package:objectbox/objectbox.dart';
 
-@Entity()
+// @Entity()
 class EmployeeModel {
-  @Id()
+  // @Id()
   int id;
   String name;
   String role;
@@ -15,4 +15,14 @@ class EmployeeModel {
     required this.role,
     required this.startDate,
   });
+
+  factory EmployeeModel.fromMap(Map<String, dynamic> map) {
+    return EmployeeModel(
+      id: map['id'],
+      name: map['name'],
+      role: map['role'],
+      startDate: map['start_date'],
+      endDate: map['end_date'],
+    );
+  }
 }

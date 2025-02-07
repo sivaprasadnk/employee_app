@@ -6,6 +6,6 @@ class AddOrUpdateEmployee {
   AddOrUpdateEmployee(this.repository);
 
   Future call(EmployeeModel employee) async {
-    return await repository.addOrUpdateEmployee(employee);
+    return await repository.addEmployee(employee);
   }
 }

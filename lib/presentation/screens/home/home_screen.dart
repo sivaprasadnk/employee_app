@@ -1,6 +1,4 @@
 import 'package:employee_app/core/constants/colors.dart';
-import 'package:employee_app/data/models/employee_model.dart';
-import 'package:employee_app/main.dart';
 import 'package:employee_app/presentation/screens/add_employee/add_employee_screen.dart';
 import 'package:employee_app/presentation/screens/home/employees_listview.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +13,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Stream<List<EmployeeModel>> _stream;
+  // late Stream<List<EmployeeModel>> _stream;
 
   @override
   void initState() {
-    _stream = objectbox.store
-        .box<EmployeeModel>()
-        .query()
-        .watch(triggerImmediately: true)
-        .map((query) => query.find());
+    // _stream = objectbox.store
+    //     .box<EmployeeModel>()
+    //     .query()
+    //     .watch(triggerImmediately: true)
+    //     .map((query) => query.find());
     super.initState();
   }
 
@@ -55,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text('Employee List'),
         ),
         body: StreamBuilder(
-          stream: _stream,
+          stream: Stream.empty(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(
