@@ -130,35 +130,34 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   ),
                 ),
                 SizedBox(height: 23),
-                ContainerWidget(
-                  child: GestureDetector(
-                    onTap: () async {
-                      unfocus();
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (_) {
-                            return Material(
-                              color: kWhiteColor,
-                              borderRadius: BorderRadius.circular(16.r),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: employeeRoles.map((item) {
-                                  return RoleListItem(
-                                    title: item,
-                                    showDivider: employeeRoles.indexOf(item) !=
-                                        employeeRoles.length - 1,
-                                    callback: () {
-                                      selectedRole = item;
-                                      setState(() {});
-                                      Navigator.pop(context);
-                                    },
-                                  );
-                                }).toList(),
-                                
-                              ),
-                            );
-                          });
-                    },
+                GestureDetector(
+                  onTap: () async {
+                    unfocus();
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (_) {
+                          return Material(
+                            color: kWhiteColor,
+                            borderRadius: BorderRadius.circular(16.r),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: employeeRoles.map((item) {
+                                return RoleListItem(
+                                  title: item,
+                                  showDivider: employeeRoles.indexOf(item) !=
+                                      employeeRoles.length - 1,
+                                  callback: () {
+                                    selectedRole = item;
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        });
+                  },
+                  child: ContainerWidget(
                     child: Row(
                       children: [
                         SvgPicture.asset(
@@ -193,36 +192,35 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: ContainerWidget(
-                        width: double.infinity,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/images/event.svg',
-                              height: 24,
-                              width: 24,
+                      child: GestureDetector(
+                        onTap: () async {
+                          await showDialog<DateTime>(
+                            context: context,
+                            builder: (context) => CustomStartDatePickerDialog(
+                              initialDate: selectedStartDate,
                             ),
-                            SizedBox(width: 12),
-                            GestureDetector(
-                              onTap: () async {
-                                await showDialog<DateTime>(
-                                  context: context,
-                                  builder: (context) =>
-                                      CustomStartDatePickerDialog(
-                                    initialDate: selectedStartDate,
-                                  ),
-                                ).then((selectedDate) {
-                                  selectedStartDate = selectedDate!;
-                                  setState(() {});
-                                });
-                              },
-                              child: selectedStartDate.isToday
+                          ).then((selectedDate) {
+                            selectedStartDate = selectedDate!;
+                            setState(() {});
+                          });
+                        },
+                        child: ContainerWidget(
+                          width: double.infinity,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/event.svg',
+                                height: 24,
+                                width: 24,
+                              ),
+                              SizedBox(width: 12),
+                              selectedStartDate.isToday
                                   ? Text('Today')
                                   : Text(
                                       selectedStartDate.displayDate(),
                                     ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -233,35 +231,34 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     ),
                     SizedBox(width: 16.w),
                     Expanded(
-                      child: ContainerWidget(
-                        width: double.infinity,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/images/event.svg',
-                              height: 24,
-                              width: 24,
+                      child: GestureDetector(
+                        onTap: () async {
+                          await showDialog<DateTime>(
+                            context: context,
+                            builder: (context) => CustomEndDatePickerDialog(
+                              startDate: selectedStartDate,
+                              endDate: selectedEndDate,
                             ),
-                            SizedBox(width: 12),
-                            GestureDetector(
-                              onTap: () async {
-                                await showDialog<DateTime>(
-                                  context: context,
-                                  builder: (context) =>
-                                      CustomEndDatePickerDialog(
-                                    startDate: selectedStartDate,
-                                    endDate: selectedEndDate,
-                                  ),
-                                ).then((selectedDate) {
-                                  selectedEndDate = selectedDate;
-                                  setState(() {});
-                                });
-                              },
-                              child: selectedEndDate == null
+                          ).then((selectedDate) {
+                            selectedEndDate = selectedDate;
+                            setState(() {});
+                          });
+                        },
+                        child: ContainerWidget(
+                          width: double.infinity,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/event.svg',
+                                height: 24,
+                                width: 24,
+                              ),
+                              SizedBox(width: 12),
+                              selectedEndDate == null
                                   ? Text('No date')
                                   : Text(selectedEndDate!.displayDate()),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
