@@ -1,10 +1,7 @@
 import 'package:employee_app/core/common_functions.dart';
 import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
-import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/data/models/employee_model.dart';
-import 'package:employee_app/domain/use_cases/add_update_employee.dart';
-import 'package:employee_app/domain/use_cases/delete_employee.dart';
 import 'package:employee_app/presentation/screens/edit_employee/edit_employee_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,28 +54,10 @@ class EmployeesListview extends StatelessWidget {
                   children: [
                     SlidableAction(
                       onPressed: (_) async {
-                        var tempItem = item;
-                        await locator<DeleteEmployee>().call(item).then((_) {
-                          if (context.mounted) {
-                            CommonFunctions.showSnackbar(
-                              context: context,
-                              message: 'Employee data has been deleted',
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () async {
-                                  await locator<AddOrUpdateEmployee>().call(
-                                    EmployeeModel(
-                                      endDate: tempItem.endDate,
-                                      name: tempItem.name,
-                                      role: tempItem.role,
-                                      startDate: tempItem.startDate,
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          }
-                        });
+                        CommonFunctions.deleteEmployee(
+                          context: context,
+                          model: item,
+                        );
                       },
                       backgroundColor: kRedColor,
                       foregroundColor: kWhiteColor,

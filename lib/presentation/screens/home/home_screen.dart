@@ -1,9 +1,10 @@
 import 'package:employee_app/core/constants/colors.dart';
-import 'package:employee_app/core/locator.dart';
-import 'package:employee_app/data/data_source/local_datasource.dart';
+import 'package:employee_app/presentation/bloc/employee_bloc/emp_bloc.dart';
+import 'package:employee_app/presentation/bloc/employee_bloc/emp_state.dart';
 import 'package:employee_app/presentation/screens/add_employee/add_employee_screen.dart';
 import 'package:employee_app/presentation/screens/home/employees_listview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,15 +16,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // late Stream<List<EmployeeModel>> _stream;
 
   @override
   void initState() {
-    // _stream = objectbox.store
-    //     .box<EmployeeModel>()
-    //     .query()
-    //     .watch(triggerImmediately: true)
-    //     .map((query) => query.find());
     super.initState();
   }
 
@@ -54,60 +49,58 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Text('Employee List'),
         ),
-        body: StreamBuilder(
-          stream: locator<LocalDatasourceImpl>().getEmployees(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              if (snapshot.data == null || snapshot.data!.isEmpty) {
-                return Center(
-                  child: SvgPicture.asset(
-                    'assets/images/no_employee.svg',
-                    height: 244.h,
+        body: BlocBuilder<EmpBloc, EmpState>(builder: (context, state) {
+          var list =
+              (state.employeesList ?? []).where((e) => e.isActive).toList();
+          if (state.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (list.isEmpty) {
+            return Center(
+              child: SvgPicture.asset(
+                'assets/images/no_employee.svg',
+                height: 244.h,
+              ),
+            );
+          }
+          var currentList =
+              list.where((element) => element.endDate == null).toList();
+          var previousList =
+              list.where((element) => element.endDate != null).toList();
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 16.h),
+                if (currentList.isNotEmpty)
+                  EmployeesListview(
+                    list: currentList,
+                    title: 'Current Employees',
                   ),
-                );
-              }
-              var currentList = snapshot.data!
-                  .where((element) => element.endDate == null)
-                  .toList();
-              var previousList = snapshot.data!
-                  .where((element) => element.endDate != null)
-                  .toList();
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 16.h),
-                    if (currentList.isNotEmpty)
-                      EmployeesListview(
-                        list: currentList,
-                        title: 'Current Employees',
-                      ),
-                    if (previousList.isNotEmpty) SizedBox(height: 16.h),
-                    if (previousList.isNotEmpty)
-                      EmployeesListview(
-                        list: previousList,
-                        title: 'Previous Employees',
-                      ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.w, top: 12.h),
-                      child: Text(
-                        'Swipe left to delete',
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          color: kGreyColor,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }
-          },
-        ));
+                if (previousList.isNotEmpty) SizedBox(height: 16.h),
+                if (previousList.isNotEmpty)
+                  EmployeesListview(
+                    list: previousList,
+                    title: 'Previous Employees',
+                  ),
+                Padding(
+                  padding: EdgeInsets.only(left: 16.w, top: 12.h),
+                  child: Text(
+                    'Swipe left to delete',
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      color: kGreyColor,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        }
+            // },
+            ));
   }
 }

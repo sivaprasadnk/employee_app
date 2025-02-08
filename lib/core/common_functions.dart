@@ -1,5 +1,8 @@
 import 'package:employee_app/data/models/employee_model.dart';
+import 'package:employee_app/presentation/bloc/employee_bloc/emp_bloc.dart';
+import 'package:employee_app/presentation/bloc/employee_bloc/emp_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommonFunctions {
   static String getMonthAbbreviation(int month) {
@@ -42,5 +45,50 @@ class CommonFunctions {
       msg = "Role not selected";
     }
     return msg;
+  }
+
+  static addorUpdateEmployee({
+    required BuildContext context,
+    required EmployeeModel model,
+  }) {
+    var validationMsg = validate(model);
+    if (validationMsg.isEmpty) {
+      if (model.id == 0) {
+        context.read<EmpBloc>().add(AddEmployeeEvent(model));
+      } else {
+        context.read<EmpBloc>().add(UpdateEmployeeEvent(model));
+      }
+      Navigator.pop(context);
+    } else {
+      if (context.mounted) {
+        showSnackbar(context: context, message: validationMsg);
+      }
+    }
+  }
+
+  static deleteEmployee({
+    required BuildContext context,
+    required EmployeeModel model,
+  }) async {
+    // model.isActive= false;
+    // var tempItem = model;
+    context.read<EmpBloc>().add(RemoveEmployeeEvent(model));
+    showSnackbar(
+      context: context,
+      message: 'Employee data has been deleted',
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () async {
+          // await locator<AddOrUpdateEmployee>().call(
+          //   EmployeeModel(
+          //     endDate: tempItem.endDate,
+          //     name: tempItem.name,
+          //     role: tempItem.role,
+          //     startDate: tempItem.startDate,
+          //   ),
+          // );
+        },
+      ),
+    );
   }
 }

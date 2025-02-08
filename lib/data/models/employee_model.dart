@@ -1,28 +1,20 @@
-// import 'package:objectbox/objectbox.dart';
+import 'package:objectbox/objectbox.dart';
 
-// @Entity()
+@Entity()
 class EmployeeModel {
-  // @Id()
+  @Id()
   int id;
   String name;
   String role;
   DateTime startDate;
   DateTime? endDate;
+  bool isActive;
   EmployeeModel({
     this.id = 0,
     required this.endDate,
     required this.name,
     required this.role,
     required this.startDate,
+    this.isActive = true,
   });
-
-  factory EmployeeModel.fromMap(Map<String, dynamic> map) {
-    return EmployeeModel(
-      id: map['id'],
-      name: map['name'],
-      role: map['role'],
-      startDate: map['start_date'],
-      endDate: map['end_date'],
-    );
-  }
 }
