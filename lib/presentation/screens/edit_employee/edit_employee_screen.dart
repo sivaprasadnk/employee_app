@@ -1,10 +1,8 @@
+import 'package:employee_app/core/common_functions.dart';
 import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/core/constants/roles.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
-import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/data/models/employee_model.dart';
-import 'package:employee_app/domain/use_cases/add_update_employee.dart';
-import 'package:employee_app/domain/use_cases/delete_employee.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:employee_app/presentation/components/container_widget.dart';
 import 'package:employee_app/presentation/components/custom_end_date_picker.dart';
@@ -19,8 +17,10 @@ class EditEmployeeScreen extends StatefulWidget {
   const EditEmployeeScreen({
     super.key,
     required this.employeeModel,
+    required this.index,
   });
   final EmployeeModel employeeModel;
+  final int index;
 
   @override
   State<EditEmployeeScreen> createState() => _EditEmployeeScreenState();
@@ -70,21 +70,19 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                 SizedBox(width: 16),
                 SaveButton(
                   callback: () async {
-                    await locator<AddOrUpdateEmployee>()
-                        .call(
-                      EmployeeModel(
-                        id: widget.employeeModel.id,
-                        endDate: selectedEndDate,
-                        name: textEditingController.text,
-                        role: selectedRole!,
-                        startDate: selectedStartDate,
-                      ),
-                    )
-                        .then((_) {
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                      }
-                    });
+                    var model = EmployeeModel(
+                      id: widget.employeeModel.id,
+                      endDate: selectedEndDate,
+                      name: textEditingController.text.trim(),
+                      role: selectedRole ?? "",
+                      startDate: selectedStartDate,
+                      orderIndex: widget.employeeModel.orderIndex,
+                    );
+                    CommonFunctions.addorUpdateEmployee(
+                      context: context,
+                      model: model,
+                      index: widget.index,
+                    );
                   },
                 ),
                 SizedBox(width: 16),
@@ -100,13 +98,12 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
           actions: [
             GestureDetector(
               onTap: () async {
-                await locator<DeleteEmployee>()
-                    .call(widget.employeeModel)
-                    .then((_) {
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                });
+                unfocus();
+                CommonFunctions.deleteEmployee(
+                  model: widget.employeeModel,
+                  index: widget.index,
+                );
+                Navigator.pop(context);
               },
               child: Icon(Icons.delete),
             ),
@@ -213,6 +210,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+                          unfocus();
                           await showDialog<DateTime>(
                             context: context,
                             builder: (context) => CustomStartDatePickerDialog(
@@ -252,6 +250,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+                          unfocus();
                           await showDialog<DateTime>(
                             context: context,
                             builder: (context) => CustomEndDatePickerDialog(

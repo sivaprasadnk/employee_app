@@ -2,9 +2,7 @@ import 'package:employee_app/core/common_functions.dart';
 import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/core/constants/roles.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
-import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/data/models/employee_model.dart';
-import 'package:employee_app/domain/use_cases/add_update_employee.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
 import 'package:employee_app/presentation/components/container_widget.dart';
 import 'package:employee_app/presentation/components/custom_end_date_picker.dart';
@@ -62,21 +60,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       role: selectedRole ?? "",
                       startDate: selectedStartDate,
                     );
-                    var validationMsg = CommonFunctions.validate(model);
-                    if (validationMsg.isEmpty) {
-                      await locator<AddOrUpdateEmployee>()
-                          .call(model)
-                          .then((_) {
-                        if (context.mounted) {
-                          Navigator.pop(context);
-                        }
-                      });
-                    } else {
-                      if (context.mounted) {
-                        CommonFunctions.showSnackbar(
-                            context: context, message: validationMsg);
-                      }
-                    }
+                    CommonFunctions.addorUpdateEmployee(
+                      context: context,
+                      model: model,
+                      index: -1,
+                    );
                   },
                 ),
                 SizedBox(width: 16),
@@ -194,6 +182,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+                          unfocus();
                           await showDialog<DateTime>(
                             context: context,
                             builder: (context) => CustomStartDatePickerDialog(
@@ -233,6 +222,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+                          unfocus();
                           await showDialog<DateTime>(
                             context: context,
                             builder: (context) => CustomEndDatePickerDialog(
