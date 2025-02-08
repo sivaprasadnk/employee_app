@@ -12,8 +12,8 @@ class CancelButton extends StatelessWidget {
         Navigator.pop(context);
       },
       child: Container(
-        width: 73.w,
-        height: 40.h,
+        width: 40.w,
+        height: 50.h,
         decoration: BoxDecoration(
           color: kCancelBtnColor,
           borderRadius: BorderRadius.circular(6.r),
@@ -22,7 +22,7 @@ class CancelButton extends StatelessWidget {
           child: Text(
             'Cancel',
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 8.sp,
               color: kBlueColor,
               fontWeight: FontWeight.w500,
             ),

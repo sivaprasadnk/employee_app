@@ -1,6 +1,5 @@
 import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/core/locator.dart';
-import 'package:employee_app/core/object_box.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_bloc.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_event.dart';
 import 'package:employee_app/presentation/screens/home/home_screen.dart';
@@ -10,11 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-late ObjectBox objectbox;
+// late ObjectBox objectbox;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
-  objectbox = await ObjectBox.create();
+  // objectbox = await ObjectBox.create();
   runApp(const MyApp());
 }
 

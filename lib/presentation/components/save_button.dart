@@ -15,8 +15,8 @@ class SaveButton extends StatelessWidget {
         callback.call();
       },
       child: Container(
-        width: 73.w,
-        height: 40.h,
+        width: 40.w,
+        height: 50.h,
         decoration: BoxDecoration(
           color: kBlueColor,
           borderRadius: BorderRadius.circular(6.r),
@@ -25,7 +25,8 @@ class SaveButton extends StatelessWidget {
           child: Text(
             'Save',
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 8.sp,
+              // fontSize: 20,
               color: kWhiteColor,
               fontWeight: FontWeight.w500,
             ),

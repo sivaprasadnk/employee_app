@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Container(
             height: 50.h,
-            width: 50.w,
+            width: 50.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: kBlueColor,
@@ -47,7 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         appBar: AppBar(
-          title: Text('Employee List'),
+          title: Text(
+            'Employee List',
+            style: TextStyle(
+              color: kWhiteColor,
+            ),
+          ),
         ),
         body: BlocBuilder<EmpBloc, EmpState>(builder: (context, state) {
           var list =
@@ -92,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     'Swipe left to delete',
                     style: TextStyle(
-                      fontSize: 15.sp,
+                      fontSize: 16,
                       color: kGreyColor,
                     ),
                   ),

@@ -41,12 +41,12 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        bottomSheet: Material(
-          color: kWhiteColor,
-          elevation: 10,
-          child: SizedBox(
-            height: 64,
-            width: double.infinity,
+        bottomNavigationBar: SizedBox(
+          height: 64,
+          width: double.infinity,
+          child: Material(
+            color: kWhiteColor,
+            elevation: 10,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -76,6 +76,9 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Add Employee Details',
+            style: TextStyle(
+              color: kWhiteColor,
+            ),
           ),
         ),
         body: Padding(

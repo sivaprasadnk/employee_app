@@ -2,6 +2,7 @@ import 'package:employee_app/core/constants/colors.dart';
 import 'package:employee_app/core/extensions/datetime_extensions.dart';
 import 'package:employee_app/presentation/components/calendar_button.dart';
 import 'package:employee_app/presentation/components/cancel_button.dart';
+import 'package:employee_app/presentation/components/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -56,7 +57,7 @@ class _CustomStartDatePickerDialogState
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: kWhiteColor,
-      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+      insetPadding: EdgeInsets.symmetric(horizontal: 96.w),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -122,7 +123,7 @@ class _CustomStartDatePickerDialogState
                 Text(
                   DateFormat.yMMMM().format(currentMonth),
                   style:
-                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 6.sp, fontWeight: FontWeight.w500),
                 ),
                 GestureDetector(
                   onTap: () => _changeMonth(1),
@@ -134,9 +135,15 @@ class _CustomStartDatePickerDialogState
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-                  .map((day) => Text(day,
+                  .map(
+                    (day) => Text(
+                      day,
                       style: TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 15.sp)))
+                        fontWeight: FontWeight.w400,
+                        fontSize: 6.sp,
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
             SizedBox(height: 5),
@@ -153,33 +160,16 @@ class _CustomStartDatePickerDialogState
                 SizedBox(width: 12),
                 Text(
                   selectedDate.displayDate(),
-                  style: TextStyle(fontSize: 16.sp),
+                  style: TextStyle(fontSize: 6.sp),
                 ),
                 Spacer(),
                 CancelButton(),
                 SizedBox(width: 16),
-                GestureDetector(
-                  onTap: () {
+                SaveButton(
+                  callback: () {
                     Navigator.pop(context, selectedDate);
                   },
-                  child: Container(
-                    width: 73.w,
-                    height: 40.h,
-                    decoration: BoxDecoration(
-                      color: kBlueColor,
-                      borderRadius: BorderRadius.circular(6.r),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Save',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: kWhiteColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
+                  
                 ),
               ],
             ),
@@ -200,7 +190,7 @@ class _CustomStartDatePickerDialogState
     List<Widget> dayWidgets = [];
     for (int i = 0; i < startingWeekday; i++) {
       dayWidgets.add(
-          SizedBox(width: 30, height: 30)); // Empty spots before the first day
+          SizedBox(width: 10, height: 10)); // Empty spots before the first day
     }
 
     for (int day = 1; day <= daysInMonth; day++) {
@@ -213,9 +203,8 @@ class _CustomStartDatePickerDialogState
         GestureDetector(
           onTap: () => _selectDate(date),
           child: Container(
-            // duration: Duration(milliseconds: 100),
-            width: 30.w,
-            height: 30.h,
+            width: 10,
+            height: 10,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: DateTime(
@@ -232,7 +221,7 @@ class _CustomStartDatePickerDialogState
             child: Text(
               "$day",
               style: TextStyle(
-                fontSize: 15.sp,
+                fontSize: 6.sp,
                 color: DateTime(
                           selectedDate.year,
                           selectedDate.month,
@@ -250,6 +239,7 @@ class _CustomStartDatePickerDialogState
     return GridView.count(
       crossAxisCount: 7,
       shrinkWrap: true,
+      childAspectRatio: 3,
       padding: EdgeInsets.zero,
       children: dayWidgets,
     );

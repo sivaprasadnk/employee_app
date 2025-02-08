@@ -27,7 +27,7 @@ class EmployeesListview extends StatelessWidget {
             style: TextStyle(
               color: kBlueColor,
               fontWeight: FontWeight.w500,
-              fontSize: 16.sp,
+              fontSize: 16,
             ),
           ),
         ),
@@ -91,14 +91,14 @@ class EmployeesListview extends StatelessWidget {
                               item.name,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                               ),
                             ),
                             SizedBox(height: 6.h),
                             Text(
                               item.role,
                               style: TextStyle(
-                                fontSize: 14.sp,
+                                fontSize: 16,
                                 color: kGreyColor,
                               ),
                             ),
@@ -107,7 +107,7 @@ class EmployeesListview extends StatelessWidget {
                               Text(
                                 "From ${item.startDate.displayDate()}",
                                 style: TextStyle(
-                                  fontSize: 12.sp,
+                                  fontSize: 16,
                                   color: kGreyColor,
                                 ),
                               )
@@ -115,7 +115,7 @@ class EmployeesListview extends StatelessWidget {
                               Text(
                                 "${item.startDate.displayDate()} - ${item.endDate!.displayDate()}",
                                 style: TextStyle(
-                                  fontSize: 12.sp,
+                                  fontSize: 16,
                                   color: Color.fromRGBO(148, 156, 158, 1),
                                 ),
                               ),

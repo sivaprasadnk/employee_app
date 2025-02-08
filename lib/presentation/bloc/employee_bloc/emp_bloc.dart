@@ -2,7 +2,6 @@ import 'package:employee_app/core/locator.dart';
 import 'package:employee_app/data/models/employee_model.dart';
 import 'package:employee_app/domain/use_cases/add_update_employee.dart';
 import 'package:employee_app/domain/use_cases/delete_employee.dart';
-import 'package:employee_app/main.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_event.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,11 +27,8 @@ class EmpBloc extends Bloc<EmpEvent, EmpState> {
 
   onGetEmployees(GetEmployeesEvent event, Emitter<EmpState> emit) {
     state.copyWith(loading: true);
-    var newList = objectbox.store.box<EmployeeModel>().getAll();
-    for (int i = 0; i < newList.length; i++) {
-      newList[i].orderIndex = i;
-    }
-    emit(state.copyWith(list: newList, loading: false));
+
+    emit(state.copyWith(list: [], loading: false));
   }
 
   onUpdateEmployee(UpdateEmployeeEvent event, Emitter<EmpState> emit) async {

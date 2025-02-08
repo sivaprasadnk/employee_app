@@ -1,8 +1,8 @@
-import 'package:objectbox/objectbox.dart';
+// import 'package:objectbox/objectbox.dart';
 
-@Entity()
+// @Entity()
 class EmployeeModel {
-  @Id()
+  // @Id()
   int id;
   String name;
   String role;

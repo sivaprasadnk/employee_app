@@ -23,12 +23,12 @@ class RoleListItem extends StatelessWidget {
         color: kWhiteColor,
         child: Column(
           children: [
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
             Text(
               title,
-              style: TextStyle(fontSize: 16.sp),
+              style: TextStyle(fontSize: 8.sp),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 12.h),
             if (showDivider)
               Divider(
                 color: kBgColor,

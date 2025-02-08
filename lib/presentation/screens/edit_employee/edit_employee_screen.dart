@@ -57,7 +57,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        bottomSheet: Material(
+        bottomNavigationBar: Material(
           color: kWhiteColor,
           elevation: 10,
           child: SizedBox(
@@ -94,6 +94,9 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
           automaticallyImplyLeading: false,
           title: Text(
             'Edit Employee Details',
+            style: TextStyle(
+              color: kWhiteColor,
+            ),
           ),
           actions: [
             GestureDetector(
