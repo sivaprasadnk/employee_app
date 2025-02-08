@@ -5,6 +5,9 @@ on:
     branches:
       - production_web  # Trigger this workflow on push to the main branch
 
+permissions:
+  contents: write
+
 jobs:
   upload:
     name: Build web
