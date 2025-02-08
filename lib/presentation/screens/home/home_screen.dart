@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -55,9 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: BlocBuilder<EmpBloc, EmpState>(builder: (context, state) {
-          var list =
-              (state.employeesList ?? []).where((e) => e.isActive).toList();
-          list.sort((a, b) => a.orderIndex.compareTo(b.orderIndex));    
+          var list = (state.employeesList ?? []);
+          // list.sort((a, b) => a.id.compareTo(b.id));
           if (state.isLoading) {
             return Center(
               child: CircularProgressIndicator(),

@@ -56,9 +56,12 @@ class CommonFunctions {
   }) {
     var validationMsg = validate(model);
     if (validationMsg.isEmpty) {
-      if (model.id == 0) {
+      if (index == -1) {
+        debugPrint("## here addd");
+
         context.read<EmpBloc>().add(AddEmployeeEvent(model));
       } else {
+        debugPrint("## here update");
         context.read<EmpBloc>().add(UpdateEmployeeEvent(model));
       }
       Navigator.pop(context);
