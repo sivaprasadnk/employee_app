@@ -4,6 +4,7 @@ import 'package:employee_app/domain/use_cases/add_update_employee.dart';
 import 'package:employee_app/domain/use_cases/delete_employee.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_event.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EmpBloc extends Bloc<EmpEvent, EmpState> {
@@ -16,7 +17,7 @@ class EmpBloc extends Bloc<EmpEvent, EmpState> {
   }
 
   onAddEmployee(AddEmployeeEvent event, Emitter<EmpState> emit) async {
-    event.employeeModel.orderIndex = (state.employeesList ?? []).length;
+    event.employeeModel.id = (state.employeesList ?? []).length;
     var newList = [
       ...state.employeesList ?? <EmployeeModel>[],
       event.employeeModel,
@@ -33,10 +34,12 @@ class EmpBloc extends Bloc<EmpEvent, EmpState> {
 
   onUpdateEmployee(UpdateEmployeeEvent event, Emitter<EmpState> emit) async {
     var list = state.employeesList ?? [];
+debugPrint("emp id ${event.employeeModel.id}");
+
     var employeeIndex =
         list.indexWhere((employee) => employee.id == event.employeeModel.id);
     await locator<AddOrUpdateEmployee>().call(event.employeeModel);
-
+debugPrint("employeeIndex $employeeIndex");
     list[employeeIndex] = event.employeeModel;
     emit(state.copyWith(list: list));
   }
