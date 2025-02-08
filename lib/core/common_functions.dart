@@ -1,4 +1,5 @@
 import 'package:employee_app/data/models/employee_model.dart';
+import 'package:employee_app/main.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_bloc.dart';
 import 'package:employee_app/presentation/bloc/employee_bloc/emp_event.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +25,11 @@ class CommonFunctions {
   }
 
   static showSnackbar({
-    required BuildContext context,
     required String message,
     SnackBarAction? action,
   }) async {
+    var context = navigatorKey.currentState!.context;
+    ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -62,21 +64,20 @@ class CommonFunctions {
       Navigator.pop(context);
     } else {
       if (context.mounted) {
-        showSnackbar(context: context, message: validationMsg);
+        showSnackbar(message: validationMsg);
       }
     }
   }
 
   static deleteEmployee({
-    required BuildContext context,
     required EmployeeModel model,
     required int index,
   }) async {
+    var context = navigatorKey.currentState!.context;
     var prevList = context.read<EmpBloc>().state.employeesList!;
     index = prevList.indexOf(model);
     context.read<EmpBloc>().add(RemoveEmployeeEvent(model));
     showSnackbar(
-      context: context,
       message: 'Employee data has been deleted',
       action: SnackBarAction(
         label: 'Undo',

@@ -55,7 +55,6 @@ class EmployeesListview extends StatelessWidget {
                     SlidableAction(
                       onPressed: (_) async {
                         CommonFunctions.deleteEmployee(
-                          context: context,
                           model: item,
                           index: index,
                         );

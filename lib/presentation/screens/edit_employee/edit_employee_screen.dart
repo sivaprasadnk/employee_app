@@ -76,6 +76,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                       name: textEditingController.text.trim(),
                       role: selectedRole ?? "",
                       startDate: selectedStartDate,
+                      orderIndex: widget.employeeModel.orderIndex,
                     );
                     CommonFunctions.addorUpdateEmployee(
                       context: context,
@@ -99,7 +100,6 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
               onTap: () async {
                 unfocus();
                 CommonFunctions.deleteEmployee(
-                  context: context,
                   model: widget.employeeModel,
                   index: widget.index,
                 );
