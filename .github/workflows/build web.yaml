@@ -1,0 +1,26 @@
+name: Build web
+
+on:
+  push:
+    branches:
+      - production_web  # Trigger this workflow on push to the main branch
+
+jobs:
+  upload:
+    name: Build web
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.27.0'  # Use the version of Flutter you want
+
+    - name: Install dependencies
+      run: flutter pub get  # Install Flutter dependencies
+
+    - name: Build web
+      run: flutter build web
