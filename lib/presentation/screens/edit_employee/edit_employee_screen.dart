@@ -17,8 +17,10 @@ class EditEmployeeScreen extends StatefulWidget {
   const EditEmployeeScreen({
     super.key,
     required this.employeeModel,
+    required this.index,
   });
   final EmployeeModel employeeModel;
+  final int index;
 
   @override
   State<EditEmployeeScreen> createState() => _EditEmployeeScreenState();
@@ -78,6 +80,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                     CommonFunctions.addorUpdateEmployee(
                       context: context,
                       model: model,
+                      index: widget.index,
                     );
                   },
                 ),
@@ -98,6 +101,7 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                 CommonFunctions.deleteEmployee(
                   context: context,
                   model: widget.employeeModel,
+                  index: widget.index,
                 );
                 Navigator.pop(context);
               },

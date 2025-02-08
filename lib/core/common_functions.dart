@@ -50,6 +50,7 @@ class CommonFunctions {
   static addorUpdateEmployee({
     required BuildContext context,
     required EmployeeModel model,
+    required int index,
   }) {
     var validationMsg = validate(model);
     if (validationMsg.isEmpty) {
@@ -69,9 +70,10 @@ class CommonFunctions {
   static deleteEmployee({
     required BuildContext context,
     required EmployeeModel model,
+    required int index,
   }) async {
-    // model.isActive= false;
-    // var tempItem = model;
+    var prevList = context.read<EmpBloc>().state.employeesList!;
+    index = prevList.indexOf(model);
     context.read<EmpBloc>().add(RemoveEmployeeEvent(model));
     showSnackbar(
       context: context,
@@ -79,14 +81,13 @@ class CommonFunctions {
       action: SnackBarAction(
         label: 'Undo',
         onPressed: () async {
-          // await locator<AddOrUpdateEmployee>().call(
-          //   EmployeeModel(
-          //     endDate: tempItem.endDate,
-          //     name: tempItem.name,
-          //     role: tempItem.role,
-          //     startDate: tempItem.startDate,
-          //   ),
-          // );
+          context.read<EmpBloc>().add(
+                UndoRemoveEmployeeEvent(
+                  model,
+                  index,
+                  prevList: prevList,
+                ),
+              );
         },
       ),
     );

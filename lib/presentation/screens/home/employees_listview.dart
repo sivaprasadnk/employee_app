@@ -57,6 +57,7 @@ class EmployeesListview extends StatelessWidget {
                         CommonFunctions.deleteEmployee(
                           context: context,
                           model: item,
+                          index: index,
                         );
                       },
                       backgroundColor: kRedColor,
@@ -73,7 +74,10 @@ class EmployeesListview extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (_) =>
-                                  EditEmployeeScreen(employeeModel: item)));
+                                  EditEmployeeScreen(
+                                    employeeModel: item,
+                                    index: index,
+                                  )));
                     },
                     child: ColoredBox(
                       color: kWhiteColor,

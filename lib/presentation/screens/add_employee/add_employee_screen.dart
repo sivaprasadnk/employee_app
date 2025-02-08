@@ -63,6 +63,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     CommonFunctions.addorUpdateEmployee(
                       context: context,
                       model: model,
+                      index: -1,
                     );
                   },
                 ),

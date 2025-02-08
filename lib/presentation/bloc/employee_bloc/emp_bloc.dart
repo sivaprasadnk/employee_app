@@ -13,9 +13,11 @@ class EmpBloc extends Bloc<EmpEvent, EmpState> {
     on(onGetEmployees);
     on(onUpdateEmployee);
     on(onRemoveEmployee);
+    on(onUndoRemoveEmployee);
   }
 
   onAddEmployee(AddEmployeeEvent event, Emitter<EmpState> emit) async {
+    event.employeeModel.orderIndex = (state.employeesList ?? []).length;
     var newList = [
       ...state.employeesList ?? <EmployeeModel>[],
       event.employeeModel,
@@ -27,15 +29,18 @@ class EmpBloc extends Bloc<EmpEvent, EmpState> {
   onGetEmployees(GetEmployeesEvent event, Emitter<EmpState> emit) {
     state.copyWith(loading: true);
     var newList = objectbox.store.box<EmployeeModel>().getAll();
+    for (int i = 0; i < newList.length; i++) {
+      newList[i].orderIndex = i;
+    }
     emit(state.copyWith(list: newList, loading: false));
   }
 
   onUpdateEmployee(UpdateEmployeeEvent event, Emitter<EmpState> emit) async {
-    await locator<AddOrUpdateEmployee>().call(event.employeeModel);
-
     var list = state.employeesList ?? [];
     var employeeIndex =
         list.indexWhere((employee) => employee.id == event.employeeModel.id);
+    await locator<AddOrUpdateEmployee>().call(event.employeeModel);
+
     list[employeeIndex] = event.employeeModel;
     emit(state.copyWith(list: list));
   }
@@ -43,7 +48,24 @@ class EmpBloc extends Bloc<EmpEvent, EmpState> {
   onRemoveEmployee(RemoveEmployeeEvent event, Emitter<EmpState> emit) async {
     await locator<DeleteEmployee>().call(event.employeeModel);
     var list = state.employeesList!;
+    if (list.length == 1) {
+      emit(state.copyWith(loading: true));
+    }
     list.removeWhere((element) => element.id == event.employeeModel.id);
-    emit(state.copyWith(list: list));
+    emit(state.copyWith(list: list, loading: false));
+  }
+
+  onUndoRemoveEmployee(
+    UndoRemoveEmployeeEvent event,
+    Emitter<EmpState> emit,
+  ) async {
+    var list = event.prevList;
+    var itemsBefore = list.sublist(0, event.index);
+    event.employeeModel.orderIndex = event.index;
+    var itemsAfter = list.sublist(event.index);
+    var newList = [...itemsBefore, event.employeeModel, ...itemsAfter];
+    emit(state.copyWith(list: newList));
+    await locator<AddOrUpdateEmployee>().call(event.employeeModel);
+
   }
 }
